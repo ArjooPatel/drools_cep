@@ -1,0 +1,59 @@
+package com.cognizant.airport.bags;
+
+import com.cognizant.drools.cep.example.model.TransactionEvent;
+import com.cognizant.drools.cep.example.model.SessionState;
+import com.cognizant.drools.cep.example.model.Number;
+
+declare TransactionEvent
+    @role( event )
+    @expires(30s)
+    pageCategory: String
+    sessionId: String
+end
+
+declare SessionState
+    pageCategory: String
+    sessionId: String
+end
+
+rule "Create SessionState if not exist"
+when
+    TransactionEvent($sessionId : sessionId) 
+    not SessionState(sessionId == $sessionId )
+then
+	System.out.println("Creating a fact");
+	SessionState sessionState = new SessionState();
+	sessionState.setSessionId($sessionId);
+	sessionState.setState("N/A");
+	insert(sessionState);
+end
+
+
+
+rule "Customer is photographer if he/she visited >5 photo related pages during last 30 sec"
+when
+    TransactionEvent($sessionId : sessionId) 
+    $sessionState: SessionState(sessionId == $sessionId , state != "photographer")
+    Number($d : doubleValue > 5) 
+    from 
+    accumulate(TransactionEvent(sessionId == $sessionId, pageCategory =="photo")
+    over window:length(30),count(1))
+then
+	System.out.println("the customer "+$sessionId+" visited " +$d+ "5+ photo related pages within 30 sec");
+	sessionState.setState("photographer");
+	update( $sessionState);
+end
+
+rule "Customer is non-photographer if he/she visited >5 other pages during last 30 sec"
+when
+    TransactionEvent($sessionId : sessionId) 
+    $sessionState: SessionState(sessionId == $sessionId , state != "non-photographer")
+    Number($d : doubleValue > 5) 
+    from 
+    accumulate(TransactionEvent(sessionId == $sessionId, pageCategory =="non-photo")
+    over window:length(30),count(1))
+then
+	System.out.println("the customer "+$sessionId+" visited " +$d+ "5+ photo related pages within 30 sec");
+	sessionState.setState("non-photographer");
+	update( $sessionState);
+end

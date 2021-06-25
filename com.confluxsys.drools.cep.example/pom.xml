@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.confluxsys.drools.cep.example</groupId>
+  <artifactId>com.confluxsys.drools.cep.example</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>com.confluxsys.drools.cep.example</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+  <version.org.kie>6.2.0.Final</version.org.kie>
+		<version.org.slf4j>1.7.5</version.org.slf4j>
+		<version.ch.qos.logback>1.1.0</version.ch.qos.logback>
+		<version.commons.lang>2.6</version.commons.lang>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+  <!-- Drools dependencies. -->
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<version>${version.org.kie}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>${version.org.kie}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>${version.org.kie}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+    <groupId>org.drools</groupId>
+    <artifactId>knowledge-api</artifactId>
+    <version>6.1.0.Final</version>
+</dependency>
+<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+    
+  </dependencies>
+</project>
